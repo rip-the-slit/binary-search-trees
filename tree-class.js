@@ -7,7 +7,7 @@ export default class Tree {
   }
   static buildTree(array, sorted = false) {
     if (!sorted) {
-      return Tree.buildTree(mergeSort(array), true)
+      return Tree.buildTree(mergeSort(array), true);
     } else {
       if (array.length == 0) return null;
       const mid = Math.ceil(array.length / 2) - 1;
@@ -31,6 +31,14 @@ export default class Tree {
     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
     if (node.left !== null) {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
+  }
+  insert(value, node, subnode) {
+    if (node && node[subnode] == null) node[subnode] = new Node(value);
+    else {
+      node = subnode ? node[subnode] : this.root;
+      if (value < node.data) this.insert(value, node, "left");
+      else this.insert(value, node, "right");
     }
   }
 }
