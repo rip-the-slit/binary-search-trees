@@ -2,9 +2,26 @@ import Node from "./node-class.js";
 
 export default class Tree {
   constructor(array) {
-    this.root = buildTree(array);
+    this.root = Tree.buildTree(array);
   }
-  buildTree(array) {
-    return array;
+  static buildTree(array) {
+    if (array.length == 0) return null;
+    const mid = Math.ceil(array.length / 2) - 1;
+    const node = new Node(array[mid]);
+    node.left = Tree.buildTree(array.slice(0, mid));
+    node.right = Tree.buildTree(array.slice(mid + 1, array.length));
+    return node;
+  }
+  prettyPrint(node = this.root, prefix = "", isLeft = true) {
+    if (node === null) {
+      return;
+    }
+    if (node.right !== null) {
+      this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    if (node.left !== null) {
+      this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
   }
 }
