@@ -43,17 +43,37 @@ export default class Tree {
     if (value < node.data) this.insert(value, node, "left");
     else this.insert(value, node, "right");
   }
+  deleteItem(value, node, subnode) {
+    if (node === null) return;
+    if (!subnode) {
+      if (this.root.data == value) {
+        const subtree = [];
+        this.levelOrder((i) => subtree.push(i.data), this.root.left);
+        this.levelOrder((i) => subtree.push(i.data), this.root.right);
+        this.root = Tree.buildTree(subtree);
+        return;
+      } else node = this.root;
+    } else if (node?.[subnode]?.["data"] == value) {
+      const subtree = [];
+      this.levelOrder((i) => subtree.push(i.data), node[subnode]["left"]);
+      this.levelOrder((i) => subtree.push(i.data), node[subnode]["right"]);
+      node[subnode] = Tree.buildTree(subtree);
+      return;
+    } else node = node[subnode];
+
+    if (value < node?.data) this.deleteItem(value, node, "left");
+    else this.deleteItem(value, node, "right");
+  }
   levelOrder(callback, root = this.root) {
-    if (!callback) throw new Error("Callback function required")
-    else if (root == null) return
+    if (!callback) throw new Error("Callback function required");
+    else if (root == null) return;
     else {
-      const q = []
-      q.push(root)
+      const q = [root];
       while (q[0]) {
-        const node = q.shift()
-        callback(node)
-        if (node.left) q.push(node.left)
-        if (node.right) q.push(node.right)
+        const node = q.shift();
+        callback(node);
+        if (node.left) q.push(node.left);
+        if (node.right) q.push(node.right);
       }
     }
   }
