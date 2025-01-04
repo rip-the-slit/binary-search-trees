@@ -34,11 +34,13 @@ export default class Tree {
     }
   }
   insert(value, node, subnode) {
-    if (node && node[subnode] == null) node[subnode] = new Node(value);
-    else {
-      node = subnode ? node[subnode] : this.root;
-      if (value < node.data) this.insert(value, node, "left");
-      else this.insert(value, node, "right");
-    }
+    if (!subnode) {
+      if (this.root == null) return this.root = new Node(value);
+      else node = this.root;
+    } else if (node[subnode] == null) return node[subnode] = new Node(value);
+    else node = node[subnode];
+
+    if (value < node.data) this.insert(value, node, "left");
+    else this.insert(value, node, "right");
   }
 }
