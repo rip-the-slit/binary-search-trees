@@ -35,12 +35,26 @@ export default class Tree {
   }
   insert(value, node, subnode) {
     if (!subnode) {
-      if (this.root == null) return this.root = new Node(value);
+      if (this.root == null) return (this.root = new Node(value));
       else node = this.root;
-    } else if (node[subnode] == null) return node[subnode] = new Node(value);
+    } else if (node[subnode] == null) return (node[subnode] = new Node(value));
     else node = node[subnode];
 
     if (value < node.data) this.insert(value, node, "left");
     else this.insert(value, node, "right");
+  }
+  levelOrder(callback, root = this.root) {
+    if (!callback) throw new Error("Callback function required")
+    else if (root == null) return
+    else {
+      const q = []
+      q.push(root)
+      while (q[0]) {
+        const node = q.shift()
+        callback(node)
+        if (node.left) q.push(node.left)
+        if (node.right) q.push(node.right)
+      }
+    }
   }
 }
