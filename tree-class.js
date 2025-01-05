@@ -92,27 +92,33 @@ export default class Tree {
     if (!callback) throw new Error("Callback function required");
     else if (root == null) return;
     else {
-      if (root.left) this.inOrder(callback, root.left)
-      callback(root)
-      if (root.right) this.inOrder(callback, root.right)
+      if (root.left) this.inOrder(callback, root.left);
+      callback(root);
+      if (root.right) this.inOrder(callback, root.right);
     }
   }
   preOrder(callback, root = this.root) {
     if (!callback) throw new Error("Callback function required");
     else if (root == null) return;
     else {
-      callback(root)
-      if (root.left) this.preOrder(callback, root.left)
-      if (root.right) this.preOrder(callback, root.right)
+      callback(root);
+      if (root.left) this.preOrder(callback, root.left);
+      if (root.right) this.preOrder(callback, root.right);
     }
   }
   postOrder(callback, root = this.root) {
     if (!callback) throw new Error("Callback function required");
     else if (root == null) return;
     else {
-      if (root.left) this.postOrder(callback, root.left)
-      if (root.right) this.postOrder(callback, root.right)
-      callback(root)
+      if (root.left) this.postOrder(callback, root.left);
+      if (root.right) this.postOrder(callback, root.right);
+      callback(root);
     }
+  }
+  height(node) {
+    if (!node || (!node.left && !node.right)) return 0;
+    const left = this.height(node.left) + 1;
+    const right = this.height(node.right) + 1;
+    return left > right ? left : right;
   }
 }

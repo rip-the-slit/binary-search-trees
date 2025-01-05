@@ -1,5 +1,5 @@
 import Tree from "./tree-class.js";
 
-const test = new Tree([1, 2, 3, 4, 5, 6, 7])
+const test = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9])
 test.prettyPrint()
-test.postOrder((node) => console.log(node.data))
+console.log(test.height(test.find(5)))
