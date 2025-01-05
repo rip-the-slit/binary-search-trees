@@ -64,6 +64,17 @@ export default class Tree {
     if (value < node?.data) this.deleteItem(value, node, "left");
     else this.deleteItem(value, node, "right");
   }
+  find(value, node, subnode) {
+    if (node === null) return node;
+    if (!subnode) {
+      if (this.root.data == value) return this.root;
+      else node = this.root;
+    } else if (node?.[subnode]?.["data"] == value) return node[subnode];
+    else node = node[subnode];
+
+    if (value < node?.data) return this.find(value, node, "left");
+    else return this.find(value, node, "right");
+  }
   levelOrder(callback, root = this.root) {
     if (!callback) throw new Error("Callback function required");
     else if (root == null) return;
