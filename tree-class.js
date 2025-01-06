@@ -135,4 +135,11 @@ export default class Tree {
       this.isBalanced(node?.right)
     );
   }
+  rebalance() {
+    if (!this.isBalanced()) {
+      const tree = []
+      this.levelOrder((node) => tree.push(node.data))
+      this.root = Tree.buildTree(tree)
+    }
+  }
 }
